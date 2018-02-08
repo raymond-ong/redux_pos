@@ -22,6 +22,7 @@ class ProductsPane extends React.Component {
     <ProdListCombo className="ProductsList" products={productsList} onChangeHandler={this.productChanged.bind(this)}/>
     <br/>
     <ProductDetails product={selectedProduct}/>
+    <br/>
     <button 
       disabled={this.isProductSelected() ? '' : 'disabled'}
       onClick={this.addCartClicked.bind(this)}

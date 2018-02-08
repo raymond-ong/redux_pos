@@ -1,18 +1,27 @@
 import React, { Component } from 'react';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
-import ProductsPane from '../containers/productsPane'
+import ProductsPane from '../containers/productsPane';
+import CartPane from '../containers/cartPane';
 
 // var _ = require('lodash');
 
 class App extends Component {
   render() {
     return (
-      <div className="App"  >
-        <header className="App-header">
-          <h2 className="App-title">POS Client</h2>
+      <div className='container'>
+        <header>
+          <h2>POS Client</h2>
         </header>
-        <ProductsPane/>
+        <div className='row'>
+          <div className='col-4'>
+            <ProductsPane/>
+          </div>
+          <div className='col-8'>
+            <CartPane/>
+          </div>
+        </div>
       </div>
     );
   }
