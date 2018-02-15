@@ -5,6 +5,7 @@ import ProdListCombo from '../components/prodlistcombo'
 import ProductDetails from '../components/prod_details'
 // import {receiveProducts} from '../actions/productListActions'
 import * as prodListActions from '../actions/productListActions'
+import * as cartActions from '../actions/cartActions'
 import {selectProducts} from '../actions/productListActions'
 
 var _ = require('lodash');
@@ -54,7 +55,8 @@ class ProductsPane extends React.Component {
 
   addCartClicked() {
     //debugger
-    let selProd = this.props.products.selectedProduct;    
+    let selProd = this.props.products.selectedProduct;   
+    this.props.cartActions.addItemToCart(selProd);
   }
 }
 
@@ -67,7 +69,8 @@ function mapStateToProps(state, ownProps) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(prodListActions, dispatch)
+    actions: bindActionCreators(prodListActions, dispatch),
+    cartActions: bindActionCreators(cartActions, dispatch),
   };
 }
 

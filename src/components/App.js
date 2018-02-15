@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import ProductsPane from '../containers/productsPane';
-import CartPane from '../containers/cartPane';
+import CartPane from '../containers/cartpane';
 
 // var _ = require('lodash');
 

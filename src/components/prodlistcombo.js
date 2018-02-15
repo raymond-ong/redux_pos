@@ -13,7 +13,7 @@ class ProdListCombo extends Component {
         // </datalist >
         // <input type="text" list="productsList" name="other" onChange={this.onChangeHandler.bind(this)}/>
         // </div>);
-        debugger
+        //debugger
         return (            
         <Select
             ref="productsCombo"
@@ -42,7 +42,7 @@ class ProdListCombo extends Component {
             return [];
         }
         let products = this.props.products;
-        debugger
+        //debugger
         return products.map(p => ({value: p.name, label: p.name}));
     }
 
@@ -55,7 +55,7 @@ class ProdListCombo extends Component {
         if (!newValue) {
             return;
         }
-        debugger
+        //debugger
         this.selectValue = newValue;
         this.props.onChangeHandler(newValue);
 	}
