@@ -7,6 +7,9 @@ import * as cartActions from '../actions/cartActions'
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import 'font-awesome/css/font-awesome.min.css'
+
+import NumericInput from 'react-numeric-input';
+
 var FontAwesome = require('react-fontawesome')
 
 
@@ -14,7 +17,9 @@ var FontAwesome = require('react-fontawesome')
 class CartPane extends Component {
     constructor() {
         super();
-        this.renderEditable = this.renderEditable.bind(this);
+        this.renderEditableQty = this.renderEditableQty.bind(this);
+        this.renderEditablePrice = this.renderEditablePrice.bind(this);
+        this.renderDeleteButton = this.renderDeleteButton.bind(this);
         this.columns = [{
             Header: 'Product',
             accessor: 'name', // String-based value accessors!
@@ -28,13 +33,13 @@ class CartPane extends Component {
             Header: 'Unit Price',
             accessor: 'price',
             width: 100,
-            Cell: props => <span className='number'>{props.value}</span> // Custom cell components!
+            Cell: this.renderEditablePrice
           }, 
           {
             Header: 'Quantity',
             accessor: 'qty',
             width: 100,
-            Cell: this.renderEditable
+            Cell: this.renderEditableQty
         }, 
         {
             Header: 'Subtotal',
@@ -47,10 +52,11 @@ class CartPane extends Component {
             width: 25,
             accessor: 'firstName',
             id: 'mybutton',
-            Cell: ({value}) => (<FontAwesome className="times" 
-                                name="times"                                 
-                                style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', cursor: 'pointer', color: 'red' }}
-                                onClick={() =>this.handleButtonClick({value})}/>)
+            // Cell: ({value}) => (<FontAwesome className="times" 
+            //                     name="times"                                 
+            //                     style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', cursor: 'pointer', color: 'red' }}
+            //                     onClick={() =>this.onDeleteItem({value})}/>)
+            Cell: this.renderDeleteButton
         }
     ];
     
@@ -63,46 +69,83 @@ class CartPane extends Component {
                 <ReactTable
                 data={this.props.cart.cartList}
                 columns={this.columns}
-                />
-
+                className="-highlight"
+                />           
             </div>
+            
         );
     }
 
-    handleButtonClick(input) {
+    onDeleteItem(cellInfo) {
         //debugger
+        let item = this.props.cart.cartList[cellInfo.index];
         console.log('[DEBUG] clicked button row!');
+        this.props.actions.deleteCartItem(item, cellInfo.index);
     }
 
-    renderEditable(cellInfo) {
+    onChangeQty(cellInfo, newValue, newValStr, e) {
+        debugger
+        let idx = cellInfo.index;
+        let item = this.props.cart.cartList[idx];
+        if (!newValue) {
+            item.subtotal = 0;
+            item.qty = null;
+        }
+        else {
+            item.qty = newValue;
+            item.subtotal = item.qty * item.price;
+        }                        
+        
+        this.props.actions.UpdateCartItem(item, idx);
+    }
+
+    renderDeleteButton(cellInfo) {
+        return (
+            <FontAwesome className="times" 
+                name="times"                                 
+                style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', cursor: 'pointer', color: 'red' }}
+                onClick={this.onDeleteItem.bind(this, cellInfo)}
+            />
+          );
+    }
+
+    renderEditableQty(cellInfo) {
         debugger
         return (
-          <div
-            style={{ backgroundColor: "#f0f0f0" }}
-            className='number'
-            contentEditable
-            suppressContentEditableWarning
-            onBlur={this.renderEditableBlurHandler.bind(this, cellInfo)}
-            dangerouslySetInnerHTML={{
-              //__html: this.state.data[cellInfo.index][cellInfo.column.id]
-              __html: this.props.cart.cartList[cellInfo.index].qty
-            }}
+          <NumericInput 
+            value={cellInfo.value}
+            style={{ input: {width: 93} }}
+            onChange={this.onChangeQty.bind(this, cellInfo)}
+          />
+        );
+      }
+
+    onChangePrice(cellInfo, newValue, newValStr, e) {
+        debugger
+        let idx = cellInfo.index;
+        let item = this.props.cart.cartList[idx];
+        if (!newValue) {
+            item.subtotal = 0;
+            item.price = null;
+        }
+        else {
+            item.price = newValue;
+            item.subtotal = item.qty * item.price;
+        }                        
+        
+        this.props.actions.UpdateCartItem(item, idx);
+    }
+
+    renderEditablePrice(cellInfo) {
+        debugger
+        return (
+          <NumericInput 
+            value={cellInfo.value}
+            style={{ input: {width: 93} }}
+            onChange={this.onChangePrice.bind(this, cellInfo)}
           />
         );
       }    
-
-      renderEditableBlurHandler(cellInfo, eBlur) {
-          // set the quantity props
-          debugger
-          let idx = cellInfo.index;
-          let content = eBlur.target.innerHTML;
-          // todo validate that it is a number
-          let item = this.props.cart.cartList[idx];
-          item.qty = parseFloat(content).toFixed(2);
-          // update the subtotal
-          item.subtotal = item.qty * item.price;
-          this.props.actions.UpdateCartItem(item, idx);
-      }
 }
 
 function mapStateToProps(state, ownProps) {
