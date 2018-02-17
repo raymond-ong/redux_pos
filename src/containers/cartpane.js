@@ -52,10 +52,6 @@ class CartPane extends Component {
             width: 25,
             accessor: 'firstName',
             id: 'mybutton',
-            // Cell: ({value}) => (<FontAwesome className="times" 
-            //                     name="times"                                 
-            //                     style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', cursor: 'pointer', color: 'red' }}
-            //                     onClick={() =>this.onDeleteItem({value})}/>)
             Cell: this.renderDeleteButton
         }
     ];
@@ -66,11 +62,26 @@ class CartPane extends Component {
         //debugger
         return (
             <div>
-                <ReactTable
-                data={this.props.cart.cartList}
-                columns={this.columns}
-                className="-highlight"
-                />           
+                <div style={{height: "87vh"}}>
+                    <ReactTable
+                    data={this.props.cart.cartList}
+                    columns={this.columns}
+                    className="-highlight mh-100"
+                    defaultPageSize={20}
+                    pageSizeOptions={[5, 10, 15, 20, 50, 100]}
+                    />                    
+                </div>    
+                <footer className="mt-1">
+                    <button
+                        className='btn btn-primary btn-lg float-left'
+                        onClick={this.submitCartClicked.bind(this)}>
+                        <FontAwesome className="times" style={{marginRight : 10}} name="shopping-cart"/>
+                        Submit Orders
+                    </button>
+                    <h3 className='float-right' 
+                        style={{'border-radius': "5px", 'background': '#ddeeff', 'padding': '7px', 'border': '1px solid #cccccc'}}
+                        >Total:  {this.props.cart.total}</h3>
+                </footer>   
             </div>
             
         );
@@ -96,7 +107,7 @@ class CartPane extends Component {
             item.subtotal = item.qty * item.price;
         }                        
         
-        this.props.actions.UpdateCartItem(item, idx);
+        this.props.actions.UpdateCartItem(item, idx);        
     }
 
     renderDeleteButton(cellInfo) {
@@ -106,7 +117,7 @@ class CartPane extends Component {
                 style={{ textShadow: '0 1px 0 rgba(0, 0, 0, 0.1)', cursor: 'pointer', color: 'red' }}
                 onClick={this.onDeleteItem.bind(this, cellInfo)}
             />
-          );
+          );          
     }
 
     renderEditableQty(cellInfo) {
@@ -145,7 +156,11 @@ class CartPane extends Component {
             onChange={this.onChangePrice.bind(this, cellInfo)}
           />
         );
-      }    
+      }
+
+      submitCartClicked(args) {
+          this.props.actions.submitCart(this.props.cart.cartList);
+      }
 }
 
 function mapStateToProps(state, ownProps) {

@@ -5,10 +5,10 @@ class ProductDetails extends Component {
         //debugger
         const {product} = this.props;
         if (!product) {
-            return <div>Please select a product</div>;
+            return <div style={{'border-radius': "5px", 'background': '#efefef', 'padding': '7px', 'border': '1px solid #cccccc'}}>No Product selected</div>;
         }
         return (
-            <div>
+            <div style={{'border-radius': "5px", 'background': '#efefef', 'padding': '7px', 'border': '1px solid #cccccc'}}>
             <div>Selected product:</div>
             <div>Name: {product.name}</div>
             <div>Description: {product.description}</div>

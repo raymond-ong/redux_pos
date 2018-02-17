@@ -18,3 +18,21 @@ export const deleteCartItem = (item, index) => ({
   item,
   index
 })
+
+export function submitCart(cartList) {
+  console.log('submitCart');
+  return function(dispatch) {
+    console.log('submitCart dispatch');
+    return fetch(`http://localhost:3001/cart`, 
+    {
+      method: 'post',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify(cartList)   
+    })
+    .then(response => response.text())
+    .then(json => {
+      //debugger
+      console.log(json);
+    });      
+  }
+}

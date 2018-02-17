@@ -7,8 +7,10 @@ import ProductDetails from '../components/prod_details'
 import * as prodListActions from '../actions/productListActions'
 import * as cartActions from '../actions/cartActions'
 import {selectProducts} from '../actions/productListActions'
+import 'font-awesome/css/font-awesome.min.css'
 
 var _ = require('lodash');
+var FontAwesome = require('react-fontawesome')
 
 class ProductsPane extends React.Component {
   constructor(props, context) {
@@ -27,7 +29,11 @@ class ProductsPane extends React.Component {
     <button 
       disabled={this.isProductSelected() ? '' : 'disabled'}
       onClick={this.addCartClicked.bind(this)}
-      >Add to Cart</button>
+      className='btn btn-success'>
+      <FontAwesome className="plus"
+        style={{marginRight : 10}} 
+        name="plus"/>
+      Add to Cart</button>
     </div>
     );
   }
