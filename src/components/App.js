@@ -16,23 +16,20 @@ class App extends Component {
     return (
       <div>
       
-      <Notifications />      
-      <nav className="navbar navbar-light navbar-xs" style={{"background-color": "#e3f2fd"}}>        
+      <Notifications options={{zIndex: 5000}}/>      
+      <nav className="navbar sticky-top navbar-light navbar-xs" style={{"background-color": "#e3f2fd"}}>        
         <h2 class="navbar-brand mb-0">
           <FontAwesome className="times" style={{marginRight : 10}} name="fax"/>
           POS Client
         </h2>
       </nav>        
 
-      <div className='container-fluid mt-1'>
-        <div className='row'>
-          <div className='col-4'>
-            <ProductsPane/>
-          </div>
-          <div className='col-8'>
-            <CartPane/>
-          </div>
-        </div>
+      <div className="sidenav">
+      <ProductsPane/>
+      </div>
+
+      <div className="main">
+        <CartPane/>
       </div>
 
       </div>

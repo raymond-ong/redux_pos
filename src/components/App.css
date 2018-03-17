@@ -36,3 +36,23 @@
 .navbar-xs { min-height:40px; height: 40px; }
 .navbar-xs .navbar-brand{ padding: 0px 0px;line-height: 32px; }
 .navbar-xs .navbar-nav > li > a {  padding-top: 10px; padding-bottom: 10px; line-height: 32px; }
+
+
+.sidenav {
+  height: 100%; /* Full-height: remove this if you want "auto" height */
+  width: 320px; /* Set the width of the sidebar */
+  position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: rgba(236, 233, 233, 0.349); /* Black */
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.main {
+  margin-left: 320px; /* Same as the width of the sidebar */
+  padding: 10px 10px;
+}

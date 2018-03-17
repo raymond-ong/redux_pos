@@ -62,12 +62,13 @@ class CartPane extends Component {
         //debugger
         return (
             <div>
-                <div style={{height: "87vh"}}>
+                {/* <div style={{height: "87vh"}}> */}
+                <div>
                     <ReactTable
                     data={this.props.cart.cartList}
                     columns={this.columns}
                     className="-highlight mh-100"
-                    defaultPageSize={20}
+                    defaultPageSize={15}
                     pageSizeOptions={[5, 10, 15, 20, 50, 100]}
                     />                    
                 </div>    
